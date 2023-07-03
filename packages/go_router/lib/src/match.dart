@@ -260,8 +260,11 @@ class RouteMatchList {
   RouteMatchList remove(RouteMatch match) {
     final List<RouteMatch> newMatches = matches.toList();
     final int index = newMatches.indexOf(match);
-    assert(index != -1);
-    newMatches.removeRange(index, newMatches.length);
+    if (index == -1) {
+      newMatches.removeLast();
+    } else {
+      newMatches.removeRange(index, newMatches.length);
+    }
 
     // Also pop ShellRoutes when there are no subsequent route matches
     while (newMatches.isNotEmpty && newMatches.last.route is ShellRouteBase) {
