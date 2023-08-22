@@ -1,5 +1,10 @@
 ## NEXT
 
+* Updates minimum supported SDK version to Flutter 3.7/Dart 2.19.
+
+## 1.0.9
+
+* Updates to Pigeon 10.0.
 * Fixes stale ignore: prefer_const_constructors.
 * Updates minimum supported SDK version to Flutter 3.10/Dart 3.0.
 

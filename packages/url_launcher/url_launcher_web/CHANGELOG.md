@@ -1,3 +1,11 @@
+## NEXT
+
+* Updates minimum supported SDK version to Flutter 3.7/Dart 2.19.
+
+## 2.0.18
+
+* Removes nested third_party Safari check.
+
 ## 2.0.17
 
 * Removes obsolete null checks on non-nullable values.

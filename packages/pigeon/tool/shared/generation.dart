@@ -45,6 +45,14 @@ String _javaFilenameForName(String inputName) {
   return specialCases[inputName] ?? _snakeToPascalCase(inputName);
 }
 
+Future<int> generateExamplePigeons() async {
+  return runPigeon(
+    input: './example/app/pigeons/messages.dart',
+    basePath: './example/app',
+    suppressVersion: true,
+  );
+}
+
 Future<int> generateTestPigeons({required String baseDir}) async {
   // TODO(stuartmorgan): Make this dynamic rather than hard-coded. Or eliminate
   // it entirely; see https://github.com/flutter/flutter/issues/115169.
@@ -52,6 +60,7 @@ Future<int> generateTestPigeons({required String baseDir}) async {
     'background_platform_channels',
     'core_tests',
     'enum',
+    'flutter_unittests', // Only for Dart unit tests in shared_test_plugin_code
     'message',
     'multiple_arity',
     'non_null_fields',
@@ -95,6 +104,7 @@ Future<int> generateTestPigeons({required String baseDir}) async {
           : '$outputBase/windows/pigeon/$input.gen.cpp',
       cppNamespace: '${input}_pigeontest',
       suppressVersion: true,
+      dartPackageName: 'pigeon_integration_tests',
     );
     if (generateCode != 0) {
       return generateCode;
@@ -109,6 +119,7 @@ Future<int> generateTestPigeons({required String baseDir}) async {
           ? null
           : '$outputBase/macos/Classes/$pascalCaseName.gen.swift',
       suppressVersion: true,
+      dartPackageName: 'pigeon_integration_tests',
     );
     if (generateCode != 0) {
       return generateCode;
@@ -133,6 +144,7 @@ Future<int> generateTestPigeons({required String baseDir}) async {
           ? null
           : '$alternateOutputBase/ios/Classes/$pascalCaseName.gen.m',
       suppressVersion: true,
+      dartPackageName: 'pigeon_integration_tests',
     );
     if (generateCode != 0) {
       return generateCode;
@@ -150,6 +162,7 @@ Future<int> generateTestPigeons({required String baseDir}) async {
           ? null
           : '$alternateOutputBase/macos/Classes/$pascalCaseName.gen.m',
       suppressVersion: true,
+      dartPackageName: 'pigeon_integration_tests',
     );
     if (generateCode != 0) {
       return generateCode;
@@ -177,6 +190,7 @@ Future<int> runPigeon({
   bool suppressVersion = false,
   String copyrightHeader = './copyright_header.txt',
   String? basePath,
+  String? dartPackageName,
 }) async {
   // Temporarily suppress the version output via the global flag if requested.
   // This is done because having the version in all the generated test output
@@ -210,6 +224,7 @@ Future<int> runPigeon({
     swiftOut: swiftOut,
     swiftOptions: const SwiftOptions(),
     basePath: basePath,
+    dartPackageName: dartPackageName,
   ));
   includeVersionInGeneratedWarning = originalWarningSetting;
   return result;
